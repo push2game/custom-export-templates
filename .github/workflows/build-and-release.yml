@@ -28,7 +28,7 @@ jobs:
       - name: Get timestamp
         id: timestamp
         run: |
-          echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
+          echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
 
       - name: GH Release
         id: release_step
