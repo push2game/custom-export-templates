@@ -25,15 +25,18 @@ SOFTWARE.
 """
 
 import argparse
-import os
+import subprocess
 
 GODOT_ENGINE_REPOSITORY = "godotengine/godot"
 
 
 def download_godot(tag):
-    clone_url = f"https://github.com/{GODOT_ENGINE_REPOSITORY}.git --depth 1"
-    git_cmd = f"git clone -b {tag} {clone_url} workspace/godot"
-    os.system(git_cmd)
+    clone_url = f"https://github.com/{GODOT_ENGINE_REPOSITORY}.git"
+
+    subprocess.run(
+        ["git", "clone", "-b", tag, "--depth", "1", clone_url, "workspace/godotssss"],
+        check=True,
+    )
 
 
 if __name__ == "__main__":
