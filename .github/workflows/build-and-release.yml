@@ -74,22 +74,21 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
-    strategy:
-      fail-fast: false
-      matrix:
-        mode: [debug, release]
-        os: [ubuntu-latest, windows-latest]
-
     steps:
       - name: Create a directory to store artifacts
-        run: mkdir -p templates
+        run: |
+          mkdir templates
+          mkdir artifacts
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.os }}-${{ matrix.mode }}
           path: |
-            templates/
+            artifacts/
+
+      - name: Extract export templates
+        run: |
+          7z x 'artifacts/*.zip' -o'./templates' -y
 
       - name: Use UPX to compress export templates
         uses: crazy-max/ghaction-upx@v3
