@@ -25,8 +25,7 @@ SOFTWARE.
 """
 
 import argparse
-import platform
-import os
+import subprocess
 
 GODOT_ENGINE_REPOSITORY = "godotengine/godot"
 
@@ -53,8 +52,3 @@ if __name__ == "__main__":
     print(f"Start to download Godot Engine source code for version {tag}")
     download_godot(tag)
     print("Godot Engine source code downloaded successfully")
-
-    if platform.system() == "Linux":
-        import linux.download as linux
-
-        linux.download_linux_impl()
