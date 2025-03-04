@@ -57,11 +57,11 @@ jobs:
         run: |
           python download.py --tag ${{ github.event.inputs.tag }}
 
-      - name: Install buildroot toolchains for Linux
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          chmod +x workspaces/buildroot/relocate-sdk.sh
-          sudo workspaces/buildroot/relocate-sdk.sh
+      # - name: Install buildroot toolchains for Linux
+      #   if: matrix.os == 'ubuntu-latest'
+      #   run: |
+      #     chmod +x workspaces/buildroot/relocate-sdk.sh
+      #     sudo workspaces/buildroot/relocate-sdk.sh
 
       - name: Build export templates
         run: |

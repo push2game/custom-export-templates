@@ -28,7 +28,8 @@ import requests
 import os
 
 BUILDROOT_REPOSITORY = "godotengine/buildroot"
-BUILDROOT_FILENAME = "x86_64-godot-linux-gnu_sdk-buildroot.tar.bz2"
+BUILDROOT_FILENAME = "x86_64-godot-linux-gnu_sdk-buildroot"
+BUILDROOT_FILENAME_EXTENTION = BUILDROOT_FILENAME + ".tar.bz2"
 
 
 def get_latest_tag_buildroot():
@@ -40,15 +41,19 @@ def get_latest_tag_buildroot():
 
 
 def download_buildroot(tag):
-    download_url = f"https://github.com/{BUILDROOT_REPOSITORY}/releases/download/{tag}/{BUILDROOT_FILENAME}"
+    download_url = f"https://github.com/{BUILDROOT_REPOSITORY}/releases/download/{tag}/{BUILDROOT_FILENAME_EXTENTION}"
 
     file_response = requests.get(download_url)
     file_response.raise_for_status()
 
-    with open(f"workspace/{BUILDROOT_FILENAME}", "wb") as f:
+    with open(f"workspace/{BUILDROOT_FILENAME_EXTENTION}", "wb") as f:
         f.write(file_response.content)
 
-    os.system(f"tar -xjf workspace/{BUILDROOT_FILENAME} -C workspace/buildroot/")
+    os.system(
+        f"tar -xjf workspace/{BUILDROOT_FILENAME_EXTENTION} -C workspace/{BUILDROOT_FILENAME}/"
+    )
+    os.system(f"chmod +x workspaces/{BUILDROOT_FILENAME}/relocate-sdk.sh")
+    os.system(f"sudo workspaces/{BUILDROOT_FILENAME}/relocate-sdk.sh")
 
 
 def download_linux_impl():
