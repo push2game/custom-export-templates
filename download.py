@@ -25,7 +25,7 @@ SOFTWARE.
 """
 
 import argparse
-import subprocess
+import os
 
 GODOT_ENGINE_REPOSITORY = "godotengine/godot"
 
