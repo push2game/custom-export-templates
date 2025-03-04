@@ -41,8 +41,8 @@ jobs:
             libgl1-mesa-dev \
             libglu-dev \
             libasound2-dev \
-            libpulse-dev 
-            \libudev-dev \
+            libpulse-dev \
+            libudev-dev \
             libxi-dev \
             libxrandr-dev \
             yasm
