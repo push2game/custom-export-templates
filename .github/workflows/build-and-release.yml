@@ -45,6 +45,7 @@ jobs:
             libudev-dev \
             libxi-dev \
             libxrandr-dev \
+            libwayland-dev \
             yasm
 
       - name: Install Python requirements
