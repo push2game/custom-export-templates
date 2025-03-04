@@ -48,15 +48,11 @@ build_args = {
 
 
 def build_godot(mode):
-    print(f"Start to build Godot Engine in {mode} mode")
-
     args = " ".join(build_args.get(mode, []))
 
     scons_command = f"scons {args}"
 
     os.system(f"cd workspace/godot && {scons_command}")
-
-    print("Godot Engine built successfully")
 
 
 if __name__ == "__main__":
