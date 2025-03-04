@@ -22,7 +22,7 @@ jobs:
       contents: write
 
     outputs:
-      upload_url: ${{ steps.release_step.outputs.upload_url }}
+      release_id: ${{ steps.release_step.outputs.id }}
 
     steps:
       - name: Get timestamp
@@ -111,5 +111,5 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -H "Content-Type: application/octet-stream" \
-          "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.inputs.release_id }}/assets?name=${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip" \
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.output.outputs.release_id }}/assets?name=${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip" \
           --data-binary @"${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip"
