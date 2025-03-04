@@ -7,6 +7,9 @@
 
 > Custom Godot Engine export templates
 
+> [!IMPORTANT]  
+> Only supports x86_64
+
 ## What is this?
 
 - This repository contains custom export templates for the [Godot Engine](https://github.com/godotengine/godot).
