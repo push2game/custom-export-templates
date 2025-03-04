@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         mode: [debug, release]
-        os: [windows-latest]
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout repository
@@ -39,4 +39,4 @@ jobs:
 
       - name: Build export templates
         run: |
-          python build.py  --mode ${{ matrix.mode }}
+          python build.py --mode ${{ matrix.mode }}
