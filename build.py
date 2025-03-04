@@ -25,7 +25,7 @@ SOFTWARE.
 """
 
 import argparse
-import subprocess
+import os
 
 build_args = {
     "debug": [
@@ -48,15 +48,11 @@ build_args = {
 
 
 def build_godot(mode):
-    print(f"Start to build Godot Engine in {mode} mode")
-
     args = " ".join(build_args.get(mode, []))
 
     scons_command = f"scons {args}"
 
-    subprocess.run(f"cd workspace/godot && {scons_command}", shell=True, check=True)
-
-    print("Godot Engine built successfully")
+    os.system(f"cd workspace/godot && {scons_command}")
 
 
 if __name__ == "__main__":
