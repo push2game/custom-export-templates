@@ -31,7 +31,7 @@ GODOT_ENGINE_REPOSITORY = "godotengine/godot"
 
 
 def download_godot(tag):
-    clone_url = f"https://github.com/{GODOT_ENGINE_REPOSITORY}.git"
+    clone_url = f"https://github.com/{GODOT_ENGINE_REPOSITORY}.git --depth 1"
     git_cmd = f"git clone -b {tag} {clone_url} workspace/godot"
     os.system(git_cmd)
 
