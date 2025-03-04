@@ -92,7 +92,7 @@ jobs:
 
       - name: Extract export templates
         run: |
-          7z x 'artifacts/*.zip' -o'./templates' -y
+          7z x artifacts/* -o ./templates -y
 
       - name: Use UPX to compress export templates
         uses: crazy-max/ghaction-upx@v3
