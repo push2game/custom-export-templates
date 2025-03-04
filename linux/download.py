@@ -50,10 +50,9 @@ def download_buildroot(tag):
         f.write(file_response.content)
 
     os.system(f"tar -xjf workspace/{BUILDROOT_FILENAME_EXTENTION} -C workspace/")
-    os.system(f"ls -la workspace/{BUILDROOT_FILENAME_EXTENTION}")
-    os.system(f"chmod +x workspaces/{BUILDROOT_FILENAME}/relocate-sdk.sh")
-    os.system(f"sudo workspaces/{BUILDROOT_FILENAME}/relocate-sdk.sh")
-    os.system(f"export PATH=./workspaces/{BUILDROOT_FILENAME}/bin:$PATH")
+    os.system(f"chmod +x workspace/{BUILDROOT_FILENAME}/relocate-sdk.sh")
+    os.system(f"sudo workspace/{BUILDROOT_FILENAME}/relocate-sdk.sh")
+    os.system(f"export PATH=./workspace/{BUILDROOT_FILENAME}/bin:$PATH")
     os.system(f"g++ --version")
 
 
