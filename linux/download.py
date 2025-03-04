@@ -24,40 +24,35 @@ SOFTWARE.
 
 """
 
-import argparse
+import requests
 import subprocess
-import platform
 
-GODOT_ENGINE_REPOSITORY = "godotengine/godot"
+BUILDROOT_REPOSITORY = "godotengine/buildroot"
+BUILDROOT_FILENAME = "x86_64-godot-linux-gnu_sdk-buildroot.tar.bz2"
 
 
-def download_godot(tag):
-    clone_url = f"https://github.com/{GODOT_ENGINE_REPOSITORY}.git"
+def get_latest_tag_buildroot():
+    response = requests.get(
+        f"https://api.github.com/repos/{BUILDROOT_REPOSITORY}/releases/latest"
+    )
+    response_json = response.json()
+    return response_json["tag_name"]
+
+
+def download_buildroot(tag):
+    download_url = f"https://github.com/{BUILDROOT_REPOSITORY}/releases/download/{tag}/{BUILDROOT_FILENAME}"
+
+    file_response = requests.get(download_url)
+    file_response.raise_for_status()
+
+    with open(f"workspace/{BUILDROOT_FILENAME}", "wb") as f:
+        f.write(file_response.content)
 
     subprocess.run(
-        ["git", "clone", "-b", tag, "--depth", "1", clone_url, "workspace/godot"],
-        check=True,
+        f"tar -xjf workspace/{BUILDROOT_FILENAME} -C workspace/buildroot/", check=True
     )
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Download Godot Engine source code")
-    parser.add_argument(
-        "-t",
-        "--tag",
-        type=str,
-        help="Tag of the Godot Engine version to download",
-        required=True,
-    )
-
-    args = parser.parse_args()
-    tag = args.tag
-
-    print(f"Start to download Godot Engine source code for version {tag}")
-    download_godot(tag)
-    print("Godot Engine source code downloaded successfully")
-
-    if platform.system() == "Linux":
-        import linux.download as linux
-
-        linux.download_linux_impl()
+def download_linux_impl():
+    tag = get_latest_tag_buildroot()
+    download_buildroot(tag)
