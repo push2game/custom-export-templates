@@ -100,7 +100,7 @@ jobs:
       - name: Zip export templates
         run: |
           cd templates
-          7z a custom-templates.7z .
+          7z a custom-templates.zip .
 
       - name: Get timestamp
         id: timestamp
@@ -111,7 +111,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            custom-templates.7z
+            custom-templates.zip
           tag_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
           release_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
           body: |
