@@ -34,7 +34,7 @@ def download_godot(tag):
     clone_url = f"https://github.com/{GODOT_ENGINE_REPOSITORY}.git"
 
     subprocess.run(
-        ["git", "clone", "-b", tag, "--depth", "1", clone_url, "workspace/godotssss"],
+        ["git", "clone", "-b", tag, "--depth", "1", clone_url, "workspace/godot"],
         check=True,
     )
 
