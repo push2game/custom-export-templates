@@ -25,7 +25,7 @@ SOFTWARE.
 """
 
 import requests
-import subprocess
+import os
 
 BUILDROOT_REPOSITORY = "godotengine/buildroot"
 BUILDROOT_FILENAME = "x86_64-godot-linux-gnu_sdk-buildroot.tar.bz2"
@@ -48,9 +48,7 @@ def download_buildroot(tag):
     with open(f"workspace/{BUILDROOT_FILENAME}", "wb") as f:
         f.write(file_response.content)
 
-    subprocess.run(
-        f"tar -xjf workspace/{BUILDROOT_FILENAME} -C workspace/buildroot/", check=True
-    )
+    os.system(f"tar -xjf workspace/{BUILDROOT_FILENAME} -C workspace/buildroot/")
 
 
 def download_linux_impl():

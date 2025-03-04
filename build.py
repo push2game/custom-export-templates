@@ -25,7 +25,7 @@ SOFTWARE.
 """
 
 import argparse
-import subprocess
+import os
 
 build_args = {
     "debug": [
@@ -54,7 +54,7 @@ def build_godot(mode):
 
     scons_command = f"scons {args}"
 
-    subprocess.run(f"cd workspace/godot && {scons_command}", shell=True, check=True)
+    os.system(f"cd workspace/godot && {scons_command}")
 
     print("Godot Engine built successfully")
 
