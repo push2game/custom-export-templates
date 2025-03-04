@@ -34,8 +34,8 @@ jobs:
         id: release_step
         uses: softprops/action-gh-release@v2
         with:
+          name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
           tag_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
-          release_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
           body: |
             Custom export templates for Godot Engine ${{ github.event.inputs.tag }}
 
