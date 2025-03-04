@@ -14,9 +14,36 @@ on:
           - 4.2-stable
 
 jobs:
+  release:
+    name: Release export templates
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    outputs:
+      upload_url: ${{ steps.release_step.outputs.upload_url }}
+
+    steps:
+      - name: Get timestamp
+        id: timestamp
+        run: |
+          echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
+
+      - name: GH Release
+        id: release_step
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
+          release_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
+          body: |
+            Custom export templates for Godot Engine ${{ github.event.inputs.tag }}
+
   build:
     name: Build Godot Engine ${{ github.event.inputs.tag }} in ${{ matrix.mode }} mode on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+
+    needs: release
 
     strategy:
       fail-fast: false
@@ -63,60 +90,20 @@ jobs:
         run: |
           python build.py --mode ${{ matrix.mode }}
 
-      - name: Upload to artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.os }}-${{ matrix.mode }}
-          path: |
-            workspace/godot/bin/*
-            !workspace/godot/bin/*console*
-
-  release:
-    name: Release export templates
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Create a directory to store artifacts
-        run: |
-          mkdir templates
-          mkdir artifacts
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: |
-            artifacts/
-
-      - run: ls -la artifacts
-
-      - name: Extract export templates
-        run: |
-          7z x artifacts/* -o ./templates -y
-
       - name: Use UPX to compress export templates
         uses: crazy-max/ghaction-upx@v3
         with:
           version: latest
           files: |
-            templates/*
+            workspace/godot/bin/*
 
       - name: Zip export templates
         run: |
-          cd templates
-          7z a custom-templates.zip .
+          cd workspace/godot/bin
+          7z a  ../../../${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip *
 
-      - name: Get timestamp
-        id: timestamp
-        run: |
-          echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
-
-      - name: GH Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload export templates
+        uses: shogo82148/actions-upload-release-asset@v1
         with:
-          files: |
-            custom-templates.zip
-          tag_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
-          release_name: ${{ github.event.inputs.tag }}-${{ steps.timestamp.outputs.timestamp }}
-          body: |
-            Custom export templates for Godot Engine ${{ github.event.inputs.tag }}
+          upload_url: ${{ needs.release.outputs.upload_url }}
+          asset_path: ${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip
