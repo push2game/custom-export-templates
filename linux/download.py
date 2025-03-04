@@ -49,9 +49,8 @@ def download_buildroot(tag):
     with open(f"workspace/{BUILDROOT_FILENAME_EXTENTION}", "wb") as f:
         f.write(file_response.content)
 
-    os.system(
-        f"tar -xjf workspace/{BUILDROOT_FILENAME_EXTENTION} -C workspace/"
-    )
+    os.system(f"tar -xjf workspace/{BUILDROOT_FILENAME_EXTENTION} -C workspace/")
+    os.system(f"ls workspace")
     os.system(f"chmod +x workspaces/{BUILDROOT_FILENAME}/relocate-sdk.sh")
     os.system(f"sudo workspaces/{BUILDROOT_FILENAME}/relocate-sdk.sh")
     os.system(f"export PATH=./workspaces/{BUILDROOT_FILENAME}/bin:$PATH")
