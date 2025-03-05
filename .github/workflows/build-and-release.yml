@@ -104,7 +104,8 @@ jobs:
           cd workspace/godot/bin
           7z a  ../../../${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip *
 
-      - name: Upload export templates
+      - name: Upload export templates on Linux
+        if: matrix.os == 'ubuntu-latest'
         run: |
           curl -L \
           -X POST \
@@ -113,4 +114,16 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           -H "Content-Type: application/octet-stream" \
           "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.release_id }}/assets?name=${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip" \
+          --data-binary @"${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip"
+
+      - name: Upload export templates on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          curl -L `
+          -X POST `
+          -H "Accept: application/vnd.github+json" `
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" `
+          -H "X-GitHub-Api-Version: 2022-11-28" `
+          -H "Content-Type: application/octet-stream" `
+          "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.release_id }}/assets?name=${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip" `
           --data-binary @"${{ github.event.inputs.tag }}-${{ matrix.os }}-${{ matrix.mode }}.zip"
