@@ -110,8 +110,8 @@ jobs:
             --method POST \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/$REPOSITORY/releases/$RELEASE_ID/assets?name=$FILE_NAME.zip \
-            -f "$FILE_NAME.zip"
+            /repos/$REPOSITORY/releases/$RELEASE_ID/assets?name=$FILE_NAME \
+            -f "$FILE_NAME"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
