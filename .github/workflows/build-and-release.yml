@@ -30,7 +30,7 @@ jobs:
         id: release_tag
         run: |
           release_tag="${{ github.event.inputs.tag }}-$(date +%s)"
-          echo "release_tag=$(date +%s)" >> $GITHUB_OUTPUT
+          echo "release_tag=$release_tag" >> $GITHUB_OUTPUT
 
       - name: GH Release
         uses: softprops/action-gh-release@v2
