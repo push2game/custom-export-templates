@@ -46,7 +46,7 @@ jobs:
             Custom export templates for Godot Engine ${{ github.event.inputs.tag }}
 
   build:
-    name: Build Godot Engine ${{ github.event.inputs.tag }} in ${{ matrix.mode }} mode on ${{ matrix.os }}
+    name: Build export templates for ${{ github.event.inputs.tag }} in ${{ matrix.mode }} mode on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     needs: release
