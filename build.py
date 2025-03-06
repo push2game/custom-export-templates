@@ -33,7 +33,6 @@ build_args_optional = [
     "use_mingw=yes",
     "disable_3d=yes",
     "disable_advanced_gui=yes",
-    "lto=full",
     "module_text_server_adv_enabled=no",
     "module_text_server_fb_enabled=yes",
     "module_basis_universal_enabled=no",
@@ -83,6 +82,7 @@ build_args = {
         "target=template_release",
         "production=yes",
         "optimize=speed_trace",
+        "lto=full",
     ]
     + build_args_optional,
 }
