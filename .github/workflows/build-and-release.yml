@@ -65,7 +65,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == ubuntu-latest
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -94,19 +94,16 @@ jobs:
           python download.py --tag ${{ github.event.inputs.tag }}
 
       - name: Download PCK encryption key
-        if: github.event.inputs.pck_encryption == 'true'
+        if: github.event.inputs.pck_encryption == true
         run: |
-          curl \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -o workspace/godot.gdkey \
-            https://raw.githubusercontent.com/push2game/config/refs/heads/main/godot.gdkey
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -o workspace/godot.gdkey https://raw.githubusercontent.com/push2game/config/refs/heads/main/godot.gdkey
 
       - name: Build export templates
         run: |
           python build.py --mode ${{ matrix.mode }}
 
       - name: Use UPX to compress export templates
-        if: matrix.mode == 'release'
+        if: matrix.mode == release
         uses: crazy-max/ghaction-upx@v3
         with:
           version: latest
