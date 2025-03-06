@@ -19,25 +19,19 @@
 
 ### For release templates
 
-| #   | Flag                   | Value              |
-| --- | ---------------------- | ------------------ |
-| 1   | `target`               | `template_release` |
-| 2   | `module_mono_enabled ` | `yes`              |
-| 3   | `use_mingw`            | `yes`              |
-| 4   | `disable_3d`           | `yes`              |
-| 5   | `production`           | `yes`              |
-| 6   | `optimize`             | `speed_trace`      |
+| #   | Flag         | Value              |
+| --- | ------------ | ------------------ |
+| 1   | `target`     | `template_release` |
+| 2   | `production` | `yes`              |
+| 3   | `optimize`   | `speed_trace`      |
 
 ### For debug templates
 
-| #   | Flag                   | Value            |
-| --- | ---------------------- | ---------------- |
-| 1   | `target`               | `template_debug` |
-| 2   | `module_mono_enabled ` | `yes`            |
-| 3   | `use_mingw`            | `yes`            |
-| 4   | `disable_3d`           | `yes`            |
-| 5   | `dev_mode`             | `yes`            |
-| 6   | `optimize`             | `debug`          |
+| #   | Flag       | Value            |
+| --- | ---------- | ---------------- |
+| 1   | `target`   | `template_debug` |
+| 2   | `dev_mode` | `yes`            |
+| 3   | `optimize` | `debug`          |
 
 ## License
 
