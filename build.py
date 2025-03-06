@@ -25,6 +25,7 @@ SOFTWARE.
 """
 
 import argparse
+import platform
 import os
 
 build_args_optional = [
@@ -87,7 +88,26 @@ build_args = {
 }
 
 
+def handle_pck_encryption():
+    if not os.path.exists("workspace/godot.gdkey"):
+        return
+
+    with open("workspace/godot.gdkey", "r") as file:
+        gdkey_content = file.read()
+
+        print(f"Find pck key is {gdkey_content}")
+
+        os.environ["SCRIPT_AES256_ENCRYPTION_KEY"] = gdkey_content
+
+        if platform.system() == "Windows":
+            os.system(f"set SCRIPT_AES256_ENCRYPTION_KEY={gdkey_content}")
+        elif platform.system() == "Linux":
+            os.system(f'export SCRIPT_AES256_ENCRYPTION_KEY="{gdkey_content}"')
+
+
 def build_godot(mode):
+    handle_pck_encryption()
+
     args = " ".join(build_args.get(mode, []))
 
     scons_command = f"scons {args}"
