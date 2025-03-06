@@ -96,7 +96,7 @@ jobs:
       - name: Download PCK encryption key
         if: github.event.inputs.pck_encryption == 'true'
         run: |
-          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -o workspace/godot.gdkey https://raw.githubusercontent.com/push2game/config/refs/heads/main/godot.gdkey
+          curl -o workspace/godot.gdkey https://raw.githubusercontent.com/push2game/config/refs/heads/main/godot.gdkey?token=${{ secrets.GITHUB_TOKEN }}
 
       - name: Build export templates
         run: |
