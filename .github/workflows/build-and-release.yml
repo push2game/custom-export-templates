@@ -53,6 +53,7 @@ jobs:
 
     permissions:
       contents: write
+      repo: read
 
     strategy:
       fail-fast: false
