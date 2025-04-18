@@ -14,11 +14,6 @@ on:
           - 4.2.2-stable
           - 4.2.1-stable
           - 4.2-stable
-      pck_encryption:
-        description: Enable PCK encryption
-        required: false
-        type: boolean
-        default: false
 
 jobs:
   release:
@@ -93,11 +88,6 @@ jobs:
       - name: Download Godot Engine source code
         run: |
           python download.py --tag ${{ github.event.inputs.tag }}
-
-      - name: Download PCK encryption key
-        if: github.event.inputs.pck_encryption == 'true'
-        run: |
-          curl -H "Authorization: Bearer ${{ secrets.P2G_TOKEN }}" -o workspace/godot.gdkey https://raw.githubusercontent.com/push2game/config/refs/heads/main/godot.gdkey
 
       - name: Build export templates
         run: |
