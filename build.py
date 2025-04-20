@@ -111,7 +111,7 @@ if __name__ == "__main__":
         help="Debug or Release mode, value (``debug`` or ``release``)",
         required=True,
     )
-    parse_args.add_argument(
+    parser.add_argument(
         "-a",
         "--android",
         type=bool,
