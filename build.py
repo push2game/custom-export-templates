@@ -88,8 +88,11 @@ build_args = {
 }
 
 
-def build_godot(mode):
+def build_godot(mode, isAndroid):
     args = " ".join(build_args.get(mode, []))
+
+    if isAndroid:
+        args.append("platform=android arch=arm64 generate_apk=yes")
 
     scons_command = f"scons {args}"
 
@@ -108,8 +111,17 @@ if __name__ == "__main__":
         help="Debug or Release mode, value (``debug`` or ``release``)",
         required=True,
     )
+    parse_args.add_argument(
+        "-a",
+        "--android",
+        type=bool,
+        help="Build for Android, value (``True`` or ``False``)",
+        default=False,
+        required=False,
+    )
 
     args = parser.parse_args()
     mode = args.mode
+    isAndroid = args.android
 
-    build_godot(mode)
+    build_godot(mode, isAndroid)
