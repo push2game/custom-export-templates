@@ -8,7 +8,7 @@
 > Custom Godot Engine export templates
 
 > [!IMPORTANT]  
-> Only supports x86_64
+> Support Windows, Linux (x86_64), and Android (arm32-v7a, arm64-v8a) platforms.
 
 ## What is this?
 
@@ -32,6 +32,12 @@
 | 1   | `target`   | `template_debug` |
 | 2   | `dev_mode` | `yes`            |
 | 3   | `optimize` | `debug`          |
+
+### For Android templates
+
+| #   | Flag     | Value |
+| --- | -------- | ----- |
+| 1   | `swappy` | `yes` |
 
 ## License
 
