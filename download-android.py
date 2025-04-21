@@ -34,27 +34,31 @@ GODOT_SWAPPY_FILE_NAME = "godot-swappy.zip"
 
 
 def download_latest_swappy():
-	response = requests.get(f'https://api.github.com/repos/{GODOT_SWAPPY_REPOSITORY}/releases/latest')
-	data = response.json()
+    response = requests.get(
+        f"https://api.github.com/repos/{GODOT_SWAPPY_REPOSITORY}/releases/latest"
+    )
+    data = response.json()
 
     download_url = None
 
-	for asset in data.get('assets', []):
-		if asset['name'].endswith('.zip'):
-			download_url = asset['browser_download_url']
+    for asset in data.get("assets", []):
+        if asset["name"].endswith(".zip"):
+            download_url = asset["browser_download_url"]
             break
-    
+
     if download_url is None:
         print("No downloadable asset found for the latest release.")
         return
-    
+
     file_response = requests.get(download_url)
     file_response.raise_for_status()
 
-    with open(f'workspace/{GODOT_SWAPPY_FILE_NAME}', 'wb') as f:
+    with open(f"workspace/{GODOT_SWAPPY_FILE_NAME}", "wb") as f:
         f.write(file_response.content)
-    
-    os.system(f'7z x workspace/{GODOT_SWAPPY_FILE_NAME} -oworkspace/godot/thirdparty/swappy-frame-pacing')
+
+    os.system(
+        f"7z x workspace/{GODOT_SWAPPY_FILE_NAME} -oworkspace/godot/thirdparty/swappy-frame-pacing"
+    )
 
 
 def download_godot(tag):
@@ -77,3 +81,4 @@ if __name__ == "__main__":
     tag = args.tag
 
     download_godot(tag)
+    download_latest_swappy()

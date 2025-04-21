@@ -30,6 +30,7 @@ import os
 
 from config import build_args
 
+
 def build_godot(mode):
     args = build_args.get(mode, [])
 
