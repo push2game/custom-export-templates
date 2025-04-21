@@ -28,7 +28,7 @@ import argparse
 import platform
 import os
 
-from common import build_args
+from config import build_args
 
 def build_godot(mode):
     args = build_args.get(mode, [])
