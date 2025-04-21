@@ -24,10 +24,6 @@ SOFTWARE.
 
 """
 
-import argparse
-import platform
-import os
-
 build_args_optional = [
     "module_mono_enabled=yes",
     "use_mingw=yes",
@@ -86,42 +82,3 @@ build_args = {
     ]
     + build_args_optional,
 }
-
-
-def build_godot(mode, isAndroid):
-    args = build_args.get(mode, [])
-
-    if isAndroid:
-        args.append("platform=android arch=arm64 generate_apk=yes")
-
-    scons_command = f"scons {' '.join(args)}"
-
-    os.system(f"cd workspace/godot && {scons_command}")
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Build export templates from source code"
-    )
-    parser.add_argument(
-        "-m",
-        "--mode",
-        type=str,
-        choices=["debug", "release"],
-        help="Debug or Release mode, value (``debug`` or ``release``)",
-        required=True,
-    )
-    parser.add_argument(
-        "-a",
-        "--android",
-        type=bool,
-        help="Build for Android, value (``True`` or ``False``)",
-        default=False,
-        required=False,
-    )
-
-    args = parser.parse_args()
-    mode = args.mode
-    isAndroid = args.android
-
-    build_godot(mode, isAndroid)
